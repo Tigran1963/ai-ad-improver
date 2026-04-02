@@ -1,0 +1,77 @@
+.ads {
+	padding: toRem(22) 0;
+	min-height: 100vh;
+	background-color: #f7f5f8;
+	.dark & {
+		background-color: $bgColorDarkTheme;
+	}
+	&__container {
+	}
+	&__top {
+		padding: 0 toRem(10);
+		margin-bottom: toRem(28);
+	}
+	&__title {
+		font-weight: 500;
+		font-size: toRem(22);
+		line-height: 127%;
+	}
+	&__counter {
+		font-family: $secondFontFamily;
+		font-size: toRem(18);
+		color: #848388;
+	}
+	&__body {
+		display: grid;
+		gap: toRem(16) toRem(24);
+		grid-template-columns: 1fr 4fr;
+		align-items: start;
+		@media (max-width: $mobile) {
+			grid-template-columns: 1fr;
+		}
+	}
+	&__actions {
+		background-color: #fff;
+		height: toRem(100);
+		@media (min-width: $mobile) {
+			grid-column: span 2 / span 2;
+		}
+	}
+	&__filter {
+		background-color: #fff;
+		min-height: toRem(200);
+		@media (min-width: $mobile) {
+			grid-row-start: 2;
+		}
+	}
+	&__theme-btn {
+		margin-top: toRem(10);
+	}
+	&__list {
+		@media (min-width: $mobile) {
+			grid-row-start: 2;
+		}
+	}
+}
+.list-ads {
+	&__items {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: toRem(12) toRem(13.75);
+		@media (max-width: $pc) {
+			grid-template-columns: repeat(4, 1fr);
+		}
+		@media (max-width: $tablet) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		@media (max-width: $mobile) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media (max-width: $mobileSmall) {
+			grid-template-columns: 1fr;
+		}
+	}
+	&__pagination {
+		margin-top: toRem(10);
+	}
+}

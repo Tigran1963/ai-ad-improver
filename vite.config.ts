@@ -4,9 +4,10 @@ import react from '@vitejs/plugin-react'
 // @ts-expect-error: postcss-sort-media-queries does not have type declarations
 import postcssSortMediaQueries from 'postcss-sort-media-queries'
 import autoprefixer from 'autoprefixer';
+import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-	plugins: [react()],
+	plugins: [react(), svgr()],
 	css: {
 		postcss: {
 			plugins: [

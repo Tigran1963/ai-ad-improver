@@ -1,5 +1,5 @@
 import { apiClient } from './apiClient';
-import type { ItemsResponse, Item, GetItemsParams } from '../types/api';
+import type { ItemsResponse, Item, GetItemsParams } from '@/types/api';
 
 export const getItems = async (params: GetItemsParams, signal?: AbortSignal): Promise<ItemsResponse> => {
 	const { data } = await apiClient.get<ItemsResponse>('/items', {

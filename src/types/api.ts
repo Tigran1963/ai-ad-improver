@@ -25,6 +25,7 @@ export interface ElectronicsItemParams {
 }
 
 export interface Item {
+	imageUrl: string;
 	id: number;
 	title: string;
 	description?: string;
@@ -34,6 +35,15 @@ export interface Item {
 	updatedAt: string;
 	needsRevision: boolean;
 	params: AutoItemParams | RealEstateItemParams | ElectronicsItemParams;
+}
+
+export interface ListItem {
+	imageUrl: string;
+	id: number;
+	title: string;
+	price: number;
+	category: Category;
+	needsRevision: boolean;
 }
 
 export interface ItemsResponse {

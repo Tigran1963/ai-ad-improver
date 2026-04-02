@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getItems, getItemById, updateItem } from '../api/items';
-import type { GetItemsParams } from '../types/api';
+import { getItems, getItemById, updateItem } from '@/api/items';
+import type { GetItemsParams } from '@/types/api';
 
 export const useAdsList = (params: GetItemsParams) => {
 	return useQuery({

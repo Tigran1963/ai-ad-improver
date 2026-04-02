@@ -1,5 +1,5 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
-import { ThemeContext, type ThemeType } from "./theme.context";
+import { ThemeContext, type ThemeType } from "@/theme.context";
 
 export function ThemeProvider({ children }: PropsWithChildren) {
 	const [theme, setTheme] = useState<ThemeType>(() => (localStorage.getItem('theme') as ThemeType) || '')
