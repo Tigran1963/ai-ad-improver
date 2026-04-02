@@ -1,0 +1,29 @@
+@use "sass:math";
+// Functions
+// translate PX to REM
+@function toRem($px, $current: 16) {
+	$result: math.div($px, $current) + rem;
+	@return $result;
+}
+// translate PX to EM
+@function toEm($px, $current: 16) {
+	$result: math.div($px, $current) + em;
+	@return $result;
+}
+
+// Variables
+$fontFamily: "Roboto";
+$fontSize: toRem(14);
+$mainColor: rgba(0, 0, 0, 0.85);
+$bgColor: #f7f5f8;
+$mainColorDarkTheme: #f7f5f8;
+$bgColorDarkTheme: #333;
+$minWidth: 320;
+$maxWidthContainer: 1336;
+$containerPadding: 16;
+$containerWidth: $maxWidthContainer + $containerPadding;
+// Breakpoints
+$pc: toEm($containerWidth);
+$tablet: toEm(991.98);
+$mobile: toEm(767.98);
+$mobileSmall: toEm(479.98);
