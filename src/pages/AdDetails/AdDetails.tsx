@@ -10,19 +10,22 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 // @ts-ignore
 import 'swiper/css/thumbs';
+
 import { useTheme } from '@/hooks/useTheme';
 import { useAdDetails } from '@/hooks/useItems';
 import EditIcon from "@/assets/icons/edit.svg?react"
 import type { Item } from '@/types/api'
+import { CATEGORY_PARAMS, PARAM_LABELS, VALUE_LABELS } from '@/utils/constants';
+import { formatDate } from '@/utils/helpers';
 import './AdDetails.scss';
 
 export function AdDetails() {
 	const { id } = useParams();
 	const { theme: appTheme } = useTheme();
 	const { data: ad, isLoading, isError } = useAdDetails(Number(id));
-	console.log(ad)
-
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+
+	console.log(ad)
 
 	const images = [
 		'https://placehold.co/200x150',
@@ -34,32 +37,23 @@ export function AdDetails() {
 	].filter(Boolean);
 
 	const getMissingFields = (item: Item) => {
-		const missing = [];
-		if (!item.description) missing.push('Описание');
+		const missing: string[] = [];
 
-		Object.entries(item.params).forEach(([key, value]) => {
+		const expectedParams = CATEGORY_PARAMS[item.category] || [];
+
+		expectedParams.forEach((paramKey) => {
+			const params = (item.params || {}) as Record<string, any>;
+			const value = params[paramKey];
+
 			if (value === undefined || value === null || value === '') {
-				missing.push(PARAM_LABELS[key] || key);
+				const label = (PARAM_LABELS as Record<string, string>)[paramKey] || paramKey;
+				missing.push(label);
 			}
 		});
+
 		return missing;
 	};
 
-	const formatDate = (dateString?: string) => {
-		if (!dateString) return '';
-		const date = new Date(dateString);
-		const months = [
-			'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-			'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
-		];
-
-		const day = date.getDate();
-		const month = months[date.getMonth()];
-		const hours = date.getHours().toString().padStart(2, '0');
-		const minutes = date.getMinutes().toString().padStart(2, '0');
-
-		return `${day} ${month} ${hours}:${minutes}`;
-	};
 
 	if (isError) return (
 		<div className="ad-details">
@@ -121,7 +115,7 @@ export function AdDetails() {
 									<div className="ad-details__time">
 										<span>Опубликовано {formatDate(ad?.createdAt)}</span>
 										{Boolean(ad?.updatedAt) && (
-											<span>Отредактировано {formatDate(ad.updatedAt)}</span>
+											<span>Отредактировано {formatDate(ad?.updatedAt)}</span>
 										)}
 									</div>
 								</div>
@@ -189,7 +183,25 @@ export function AdDetails() {
 									<div className="ad-details__characteristics">
 										<h2 className="ad-details__characteristics-title">Характеристики</h2>
 										<div className="ad-details__characteristics-list">
-
+											{ad?.params && Object.entries(ad.params).map(([key, value]) => {
+												if (value === undefined || value === null || value === '') {
+													return null;
+												}
+												const displayValue = VALUE_LABELS[value as string] || value;
+												return (
+													<div key={key} className="ad-details__characteristics-list-item">
+														<span className="ad-details__characteristics-label">
+															{PARAM_LABELS[key] || key}:
+														</span>
+														<span className="ad-details__characteristics-value">
+															{displayValue}
+														</span>
+													</div>
+												);
+											})}
+											{(!ad?.params || Object.values(ad.params).every(v => v === undefined || v === null || v === '')) && (
+												<span className="ad-details__characteristics-empty">Не указаны</span>
+											)}
 										</div>
 									</div>
 								</div>

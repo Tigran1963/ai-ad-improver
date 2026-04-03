@@ -14,8 +14,9 @@ export function Ads() {
 		limit,
 		skip: (page - 1) * limit
 	});
-	console.log(data)
 
+	console.log(data)
+	
 	if (isError) return (
 		<div className="ads">
 			<div className="ads__container">

@@ -55,7 +55,7 @@
 		font-size: toRem(30);
 		line-height: 133%;
 		@media (max-width: $mobileSmall) {
-			font-size: toRem(26);
+			font-size: toRem(24);
 		}
 	}
 	&__time {
@@ -70,6 +70,9 @@
 			font-family: $secondFontFamily;
 			font-size: toRem(16);
 			color: #848388;
+			@media (max-width: $mobileSmall) {
+				font-size: toRem(12);
+			}
 		}
 	}
 	&__body {
@@ -85,8 +88,8 @@
 		@media (max-width: $mobile) {
 			flex: 0 1 50%;
 		}
-		@media (max-width:$mobileSmall){
-			 margin: toRem(0) toRem(0) toRem(16) toRem(0); 
+		@media (max-width: $mobileSmall) {
+			margin: toRem(0) toRem(0) toRem(16) toRem(0);
 		}
 	}
 	&__body-right {
@@ -98,6 +101,7 @@
 	}
 	&__description {
 		margin-top: toRem(32);
+		max-width: toRem(480);
 	}
 	&__description-title {
 		font-weight: 500;
@@ -147,8 +151,53 @@
 	&__characteristics {
 	}
 	&__characteristics-title {
+		margin-bottom: toRem(16);
+		font-weight: 500;
+		font-size: toRem(22);
+		line-height: 127%;
 	}
 	&__characteristics-list {
+	}
+	&__characteristics-list-item {
+		display: flex;
+		align-items: center;
+		&:not(:last-child) {
+			margin-bottom: toRem(6);
+		}
+	}
+	&__characteristics-label {
+		font-family: $secondFontFamily;
+		font-weight: 600;
+		font-size: toRem(16);
+		line-height: 140%;
+		color: rgba(0, 0, 0, 0.45);
+		margin-right: toRem(12);
+		flex: 0 0 30%;
+		@media (max-width: $mobile) {
+			flex: 0 0 50%;
+		}
+		.dark & {
+			color: #c2c2c2;
+		}
+	}
+	&__characteristics-value {
+		font-family: $secondFontFamily;
+		font-weight: 400;
+		font-size: toRem(16);
+		line-height: 140%;
+		color: #1e1e1e;
+		.dark & {
+			color: #fff;
+		}
+	}
+	&__characteristics-empty {
+		font-family: $secondFontFamily;
+		font-size: toRem(16);
+		line-height: 140%;
+		color: #1e1e1e;
+		.dark & {
+			color: #fff;
+		}
 	}
 	&__gallery {
 		width: 100%;

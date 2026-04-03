@@ -1,14 +1,9 @@
 import { Link } from 'react-router-dom';
 import type { ListItem } from '@/types/api';
+import { CATEGORY_MAP } from '@/utils/constants';
 import './AdCard.scss';
 
 export function AdCard({ ad }: { ad: ListItem }) {
-	const CATEGORY_MAP: Record<string, string> = {
-		auto: 'Авто',
-		real_estate: 'Недвижимость',
-		electronics: 'Электроника',
-	};
-
 	return (
 		<div className="ad-card">
 			<Link to={`/ads/${ad.id}`} className="ad-card__image">
