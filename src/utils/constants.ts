@@ -51,3 +51,10 @@ export const MONTHS = [
 	'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
 	'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
 ];
+
+export const SORT_OPTIONS = [
+	{ value: 'createdAt_desc', label: 'По новизне (сначала новые)' },
+	{ value: 'createdAt_asc', label: 'По новизне (сначала старые)' },
+	{ value: 'title_asc', label: 'По названию (А → Я)' },
+	{ value: 'title_desc', label: 'По названию: (Я → А)' },
+];

@@ -13,7 +13,7 @@ export const useAdDetails = (id: number) => {
 	return useQuery({
 		queryKey: ['ad', id],
 		queryFn: ({ signal }) => getItemById(id, signal),
-		enabled: !!id, // если нет id, не делаем запрос
+		enabled: !isNaN(id),// запрос пойдет только если id число
 	});
 };
 

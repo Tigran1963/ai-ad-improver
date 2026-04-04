@@ -8,7 +8,6 @@
 	&__container {
 	}
 	&__top {
-		padding: 0 toRem(10);
 		margin-bottom: toRem(28);
 	}
 	&__title {
@@ -31,15 +30,11 @@
 		}
 	}
 	&__actions {
-		background-color: #fff;
-		height: toRem(100);
 		@media (min-width: $mobile) {
 			grid-column: span 2 / span 2;
 		}
 	}
 	&__filter {
-		background-color: #fff;
-		min-height: toRem(200);
 		@media (min-width: $mobile) {
 			grid-row-start: 2;
 		}
@@ -69,6 +64,10 @@
 		}
 		@media (max-width: $mobileSmall) {
 			grid-template-columns: 1fr;
+		}
+		&--list {
+			grid-template-columns: 1fr !important;
+			gap: toRem(12);
 		}
 	}
 	&__pagination {

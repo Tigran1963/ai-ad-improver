@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button, ConfigProvider, Alert, theme as antdTheme } from 'antd';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,13 +19,29 @@ import { CATEGORY_PARAMS, PARAM_LABELS, VALUE_LABELS } from '@/utils/constants';
 import { formatDate } from '@/utils/helpers';
 import './AdDetails.scss';
 
+const getMissingFields = (item: Item) => {
+	const missing: string[] = [];
+	const expectedParams = CATEGORY_PARAMS[item.category] || [];
+
+	expectedParams.forEach((paramKey) => {
+		const params = (item.params || {}) as Record<string, any>;
+		const value = params[paramKey];
+
+		if (value === undefined || value === null || value === '') {
+			const label = (PARAM_LABELS as Record<string, string>)[paramKey] || paramKey;
+			missing.push(label);
+		}
+	});
+
+	return missing;
+};
+
 export function AdDetails() {
 	const { id } = useParams();
+	const isInvalidId = isNaN(Number(id));
 	const { theme: appTheme } = useTheme();
 	const { data: ad, isLoading, isError } = useAdDetails(Number(id));
 	const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-
-	console.log(ad)
 
 	const images = [
 		'https://placehold.co/200x150',
@@ -36,26 +52,12 @@ export function AdDetails() {
 		'https://placehold.co/200x150',
 	].filter(Boolean);
 
-	const getMissingFields = (item: Item) => {
-		const missing: string[] = [];
-
-		const expectedParams = CATEGORY_PARAMS[item.category] || [];
-
-		expectedParams.forEach((paramKey) => {
-			const params = (item.params || {}) as Record<string, any>;
-			const value = params[paramKey];
-
-			if (value === undefined || value === null || value === '') {
-				const label = (PARAM_LABELS as Record<string, string>)[paramKey] || paramKey;
-				missing.push(label);
-			}
-		});
-
-		return missing;
-	};
+	const missingFields = useMemo(() => {
+		return ad ? getMissingFields(ad) : [];
+	}, [ad]);
 
 
-	if (isError) return (
+	if (isInvalidId || isError) return (
 		<div className="ad-details">
 			<div className="ad-details__container">
 				<div className='ad-details__notfound'>Объявление не найдено</div>
@@ -68,15 +70,19 @@ export function AdDetails() {
 		</div>
 	)
 
-	const missingFields = ad ? getMissingFields(ad) : [];
-
 	return (
 		<div>
 			<div className="ad-details">
 				<div className="ad-details__container">
 					{isLoading ? (
-						<div className="skeleton">
-							<div className="skeleton-anim skeleton-details__title"></div>
+						<div className="skeleton skeleton-details">
+							<div className="skeleton-details__top">
+								<div className="skeleton-anim skeleton-details__title"></div>
+								<div className="skeleton-details__buttons">
+									<div className="skeleton-anim skeleton-details__button"></div>
+									<div className="skeleton-anim skeleton-details__button"></div>
+								</div>
+							</div>
 							<div className="skeleton-details__content">
 								<div className="skeleton-anim skeleton-details__image"></div>
 								<div className="skeleton-details__info">
