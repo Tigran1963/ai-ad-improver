@@ -4,7 +4,7 @@ import { CATEGORY_PARAMS } from '@/utils/constants';
 
 const calculateNeedsRevision = (item: Partial<Item>): boolean => {
 	const expectedParams = item.category ? CATEGORY_PARAMS[item.category] : [];
-	
+
 	const areParamsMissing = expectedParams.some(paramKey => {
 		const value = (item.params as any)?.[paramKey];
 		return value === undefined || value === null || value === '';
@@ -18,12 +18,7 @@ export const getItems = async (params: GetItemsParams, signal?: AbortSignal): Pr
 		params,
 		signal
 	});
-	const mappedItems = data.items.map(item => ({
-		...item,
-		needsRevision: calculateNeedsRevision(item)
-	}));
-
-	return { ...data, items: mappedItems };
+	return data;
 };
 
 export const getItemById = async (id: number, signal?: AbortSignal): Promise<Item> => {

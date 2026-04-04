@@ -25,7 +25,7 @@ export function AdEdit() {
 	const { theme: appTheme } = useTheme();
 	const [form] = Form.useForm();
 
-	const { data: ad, isLoading, isError } = useAdDetails(adId);
+	const { data: ad, isLoading } = useAdDetails(adId);
 	const { mutateAsync: updateAd, isPending: isUpdating } = useUpdateAd();
 
 	const [submittable, setSubmittable] = useState(false);
