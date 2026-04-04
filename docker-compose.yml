@@ -1,0 +1,23 @@
+services:
+  backend:
+    image: node:20-alpine
+    container_name: ad-improver-backend
+    working_dir: /app
+    volumes:
+      - ./server:/app
+    ports:
+      - "8080:8080"
+      - "5173:5173"
+    command: sh -c "npm install && npm start"
+
+  frontend:
+    image: node:20-alpine
+    container_name: ad-improver-frontend
+    working_dir: /app
+    network_mode: "service:backend"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    command: sh -c "npm install && npm run dev -- --host"
