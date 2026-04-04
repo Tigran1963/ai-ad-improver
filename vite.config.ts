@@ -8,6 +8,15 @@ import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
 	plugins: [react(), svgr()],
+	server: {
+		proxy: {
+			'/items': {
+				target: 'http://localhost:8080',
+				changeOrigin: true,
+				secure: false,
+			}
+		}
+	},
 	css: {
 		postcss: {
 			plugins: [

@@ -15,7 +15,7 @@ export const CATEGORY_PARAMS: Record<Category, string[]> = {
 
 // названия полей
 export const PARAM_LABELS: Record<string, string> = {
-	brand: 'Марка',
+	brand: 'Бренд',
 	model: 'Модель',
 	yearOfManufacture: 'Год выпуска',
 	transmission: 'Коробка передач',
