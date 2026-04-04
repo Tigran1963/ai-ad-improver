@@ -26,7 +26,7 @@ export function Ads() {
 		setPage(1);
 	}, [debouncedSearch, sort, selectedCategories, needsRevision]);
 
-	const [sortColumn, sortDirection] = sort.split('_') as [any, any];
+	const [sortColumn, sortDirection] = sort.split('_') as ['title' | 'createdAt', 'asc' | 'desc'];
 
 	const { data, isLoading, isError } = useAdsList({
 		limit,

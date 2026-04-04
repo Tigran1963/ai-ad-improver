@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getItems, getItemById, updateItem } from '@/api/items';
-import type { GetItemsParams } from '@/types/api';
+import type { GetItemsParams, Item } from '@/types/api';
 
 export const useAdsList = (params: GetItemsParams) => {
 	return useQuery({
@@ -21,7 +21,7 @@ export const useUpdateAd = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: ({ id, data }: { id: number; data: any }) => updateItem(id, data),
+		mutationFn: ({ id, data }: { id: number; data: Partial<Item> }) => updateItem(id, data),
 		onSuccess: (_, variables) => {
 			// сбрасываем кэш, чтобы при переходе на карточку данные обновились
 			queryClient.invalidateQueries({ queryKey: ['ad', variables.id] });
