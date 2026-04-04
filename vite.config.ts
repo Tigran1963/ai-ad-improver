@@ -14,6 +14,20 @@ export default defineConfig({
 				target: 'http://localhost:8080',
 				changeOrigin: true,
 				secure: false,
+			},
+			// прокси для получения токена GigaChat
+			'/gigachat-auth': {
+				target: 'https://ngw.devices.sberbank.ru:9443',
+				changeOrigin: true,
+				secure: false,
+				rewrite: (path) => path.replace(/^\/gigachat-auth/, '')
+			},
+			// прокси для самих запросов к GigaChat
+			'/gigachat-api': {
+				target: 'https://gigachat.devices.sberbank.ru',
+				changeOrigin: true,
+				secure: false,
+				rewrite: (path) => path.replace(/^\/gigachat-api/, '')
 			}
 		}
 	},

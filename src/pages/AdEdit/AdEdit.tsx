@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button, ConfigProvider, theme as antdTheme, Form, Input, Select, InputNumber, notification, Spin } from 'antd';
 import { useTheme } from '@/hooks/useTheme';
 import { useAdDetails, useUpdateAd } from '@/hooks/useItems';
+import { AiPriceAssist } from '@/components/AiAssist/AiPriceAssist';
+import { AiDescriptionAssist } from '@/components/AiAssist/AiDescriptionAssist';
 import { CATEGORY_MAP, PARAM_LABELS, VALUE_LABELS } from '@/utils/constants';
 import './AdEdit.scss';
 
@@ -108,6 +110,22 @@ export function AdEdit() {
 		return !params[paramName] ? 'warning' : '';
 	};
 
+	const getAdContext = () => {
+		const currentValues = form.getFieldsValue();
+		let context = `Категория: ${CATEGORY_MAP[currentValues.category] || currentValues.category}\nНазвание: ${currentValues.title || 'Нет'}\n`;
+		if (currentValues.params) {
+			context += Object.entries(currentValues.params)
+				.filter(([_, v]) => v)
+				.map(([k, v]) => `${PARAM_LABELS[k] || k}: ${VALUE_LABELS[v as string] || v}`)
+				.join('\n');
+		}
+		return context;
+	};
+
+	const handleApplyDesc = (newDesc: string) => {
+		form.setFieldValue('description', newDesc);
+		handleValuesChange({}, form.getFieldsValue());
+	};
 
 	if (isInvalidId) return (
 		<div className="ad-edit">
@@ -180,7 +198,7 @@ export function AdEdit() {
 											/>
 										</Form.Item>
 									</div>
-									<Button className="">Узнать рыночную цену</Button>
+									<AiPriceAssist getContext={getAdContext} />
 								</div>
 							</div>
 							<div className="ad-edit__field">
@@ -257,7 +275,7 @@ export function AdEdit() {
 									/>
 								</Form.Item>
 								<div className="ad-edit__description-button">
-									<Button className="">{values?.description ? 'Улучшить описание' : 'Придумать описание'}</Button>
+									<AiDescriptionAssist getContext={getAdContext} currentDescription={values?.description} onApply={handleApplyDesc} />
 								</div>
 							</div>
 							<div className="ad-edit__buttons">
@@ -280,4 +298,3 @@ export function AdEdit() {
 		</ConfigProvider>
 	)
 }
-

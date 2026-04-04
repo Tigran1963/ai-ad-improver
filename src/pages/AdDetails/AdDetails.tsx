@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Button, ConfigProvider, Alert, theme as antdTheme } from 'antd';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Thumbs } from 'swiper/modules';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Swiper as SwiperType } from 'swiper';
 // @ts-ignore
 import 'swiper/css';
@@ -215,7 +217,13 @@ export function AdDetails() {
 							<div className="ad-details__description">
 								<div className="ad-details__description-title">Описание</div>
 								<div className="ad-details__description-text">
-									{ad?.description || <span>Отсутствует</span>}
+									{ad?.description ? (
+										<ReactMarkdown remarkPlugins={[remarkGfm]}>
+											{ad.description}
+										</ReactMarkdown>
+									) : (
+										<span>Отсутствует</span>
+									)}
 								</div>
 							</div>
 						</>
